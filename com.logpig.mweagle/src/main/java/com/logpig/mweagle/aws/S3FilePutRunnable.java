@@ -13,6 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+
+// NOTE: change made in this file to POST the log file to S3 using its filename
+// rather than a UUID  --- Aaron Brenzel (8/13/2015)
 package com.logpig.mweagle.aws;
 
 import java.io.File;
@@ -74,7 +77,7 @@ public class S3FilePutRunnable implements Runnable
 						s3Client.createBucket(this.s3Settings.bucketName, this.s3Settings.regionName);
 					}
 					final File logfile = new File(this.filePath);
-					final String keyName = UUID.randomUUID().toString();
+					final String keyName = logfile.getName(); 
 					final PutObjectRequest request = new PutObjectRequest(this.s3Settings.bucketName, keyName, logfile);
 					s3Client.putObject(request);
 				}
